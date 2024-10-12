@@ -3,15 +3,24 @@ from member.models import CustomUser
 # Create your models here.
 
 
+class BookList(models.Model):
+    title=models.CharField(max_length=30)
+    author=models.CharField(max_length=20)
+    cheonggu=models.CharField(max_length=20)
+    publisher=models.CharField(max_length=20)
 
+    
+    
+
+    
 class Community_by_book(models.Model):
     title=models.CharField(max_length=30)
     body=models.CharField(max_length=200)
     period=models.CharField(max_length=30)
     status=models.CharField(max_length=10)
 
-    participant=models.ManyToManyField(CustomUser,on_delete=models.CASCADE)
-    leader=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    participant=models.ManyToManyField(CustomUser,related_name="participant")
+    leader=models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name="leader")
 
     book_title=models.CharField(max_length=20,null=True)
     book_author=models.CharField(max_length=20,null=True)
