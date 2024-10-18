@@ -15,7 +15,12 @@ def fetch_book(request):
         if book_title:
             # API 요청 URL (예시)
             # api_url = f'http://example.com/api/books?title={book_title}'  # 실제 API URL로 변경하세요
-            api_url=f"https://www.nl.go.kr/seoji/SearchApi.do?cert_key=001427d2c2df598d87c3a8e5077728066257ed9a1ba695729508513e03c7b303&result_style=json&page_no=1&page_size=10&title={book_title}"
+            cert_key="001427d2c2df598d87c3a8e5077728066257ed9a1ba695729508513e03c7b303"
+            api_url=f"https://www.nl.go.kr/seoji/SearchApi.do?cert_key={cert_key}&
+            result_style=json&
+            page_no=1&page_size=10&
+            title={book_title}"
+            
             print(api_url)
             
             # response = requests.get(api_url)
