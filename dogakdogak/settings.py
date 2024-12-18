@@ -87,6 +87,9 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': 3306,
+        # 'OPTIONS': {
+        #     'ssl_disabled': True,  # SSL 인증 비활성화
+        # },
     }
 }
 
