@@ -28,7 +28,7 @@ class BankbookPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bankbook
-        fields = ['book_title', 'sentence', 'body', 'start_date','start_page','end_page'] 
+        fields = ['book_title', 'sentence', 'body', 'start_date','start_page','end_page','last_page'] 
 
 
 class DateInputSerializer(serializers.Serializer):

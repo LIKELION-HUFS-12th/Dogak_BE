@@ -62,24 +62,37 @@ def profileView(request, userid_pk):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
 @api_view(['GET'])
 def how_many_books(request, userid_pk):
     try:
         # userid_pk로 사용자 가져오기
         user = CustomUser.objects.get(pk=userid_pk)
     except CustomUser.DoesNotExist:
-        return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({
+            "code": status.HTTP_404_NOT_FOUND,
+            "msg": "User not found."
+        }, status=status.HTTP_404_NOT_FOUND)
 
     # 사용자가 보유한 bankbooks 수 계산
     bankbook_count = Bankbook.objects.filter(user=user).count()
 
     return Response({
-        "user_id": userid_pk,
-        "bankbook_count": bankbook_count
+        "code": status.HTTP_200_OK,
+        "msg": "Success",
+        "data": {
+            "user_id": userid_pk,
+            "bankbook_count": bankbook_count
+        }
     }, status=status.HTTP_200_OK)
 
 
+
 from collections import Counter
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 
 @api_view(['GET'])
@@ -88,7 +101,10 @@ def genre_ratio(request, userid_pk):
         # userid_pk로 사용자 가져오기
         user = CustomUser.objects.get(pk=userid_pk)
     except CustomUser.DoesNotExist:
-        return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({
+            "code": status.HTTP_404_NOT_FOUND,
+            "msg": "User not found."
+        }, status=status.HTTP_404_NOT_FOUND)
 
     # 사용자가 보유한 bankbooks 조회
     bankbooks = Bankbook.objects.filter(user=user)
@@ -99,11 +115,13 @@ def genre_ratio(request, userid_pk):
     # 장르 비율 계산
     genre_count = Counter(genres)
     total_books = len(genres)
-    genre_ratio = {genre: count / total_books for genre, count in genre_count.items()}
+    genre_ratio = {genre: count / total_books for genre, count in genre_count.items()} if total_books > 0 else {}
 
     return Response({
-        "user_id": userid_pk,
-        "genre_ratio": genre_ratio
+        "code": status.HTTP_200_OK,
+        "msg": "Success",
+        "data": {
+            "user_id": userid_pk,
+            "genre_ratio": genre_ratio
+        }
     }, status=status.HTTP_200_OK)
-
-
