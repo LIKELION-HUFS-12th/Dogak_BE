@@ -15,7 +15,7 @@ def book_title_search(request, book_name):
     if request.method == 'GET':
         try:
             # 대소문자 구분 없이 책 제목 검색
-            books = Books.objects.filter(title__icontains=book_name)
+            books = Book.objects.filter(title__icontains=book_name)
             
             # 여러 개의 책을 직렬화합니다.
             serializer = BookSerializer(books, many=True)
