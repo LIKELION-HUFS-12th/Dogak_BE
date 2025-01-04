@@ -2,7 +2,7 @@
 URL configuration for dogakdogak project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -19,9 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('member/', include('member.urls')),
-    path('bankbook/',include('bankbook.urls')),
-    path('mypage/', include('member.urls')),
-    path('groupboard/', include('groupboard.urls')),
-    path('reviewboard/', include('reviewboard.urls')),
+    path('dj/', include('dj_rest_auth.urls')),
+    path('dj/registration/', include('dj_rest_auth.registration.urls')),
 ]
