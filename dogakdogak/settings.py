@@ -42,11 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'member',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'books',
     'bankbook',
     'groupboard',
     'reviewboard',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -161,3 +166,6 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+import pymysql
+pymysql.install_as_MySQLdb()
