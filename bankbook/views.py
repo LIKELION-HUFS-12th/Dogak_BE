@@ -56,8 +56,8 @@ def bankbook_post(request, userid_pk, booksid_pk):  # userid_pk와 books_pk를 �
     try:
         # 사용자와 책을 가져오기
         user = CustomUser.objects.get(pk=userid_pk)  # userid_pk로 사용자 가져오기
-        book = Books.objects.get(pk=booksid_pk)  # books_pk로 책 가져오기
-    except (CustomUser.DoesNotExist, Books.DoesNotExist) as e:
+        book = Book.objects.get(pk=booksid_pk)  # books_pk로 책 가져오기
+    except (CustomUser.DoesNotExist, Book.DoesNotExist) as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     # serializer에 user와 book을 포함하여 저장
