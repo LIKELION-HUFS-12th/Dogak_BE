@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from bankbook.models import *
 
 class UserSerializer(serializers.ModelSerializer):
@@ -30,3 +31,23 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def get_read_books_count(self, obj):
         return obj.user.count()
+
+
+# 새로운 CustomTokenObtainPairSerializer 추가
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        # 기본 토큰 검증
+        data = super().validate(attrs)
+
+        # 사용자 정보 추가
+        data['user'] = {
+            'id': self.user.id,
+            'username': self.user.username,
+            'name': self.user.name,
+            'email': self.user.email,
+            'gender': self.user.gender,
+            'age': self.user.age,
+            'region': self.user.region,
+        }
+
+        return data
