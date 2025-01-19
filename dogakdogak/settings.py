@@ -164,16 +164,17 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
 
 import pymysql
 pymysql.install_as_MySQLdb()
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:5173",  
+    "http://localhost:8000",
     "https://dogakdogak.store",
     "https://dogak.netlify.app",
 ]
