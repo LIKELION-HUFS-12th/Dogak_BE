@@ -76,3 +76,59 @@ def bankbook_post(request, userid_pk, booksid_pk):  # userid_pk와 books_pk를 �
 
 
 
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Bankbook  # Bankbook 모델을 가져옵니다.
+from .serializers import MonthlyReadingCountSerializer, WeeklyReadingCountSerializer, YearlyReadingCountSerializer
+from django.db.models import Count
+from django.utils import timezone
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Bankbook  # Bankbook 모델을 가져옵니다.
+from .serializers import MonthlyReadingCountSerializer, WeeklyReadingCountSerializer, YearlyReadingCountSerializer
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth, ExtractWeek, ExtractYear  # 필요한 함수 임포트
+from django.utils import timezone
+
+class MonthlyReadingCountView(APIView):
+    def get(self, request, userid_pk):
+        current_year = timezone.now().year
+        monthly_counts = (
+            Bankbook.objects.filter(user_id=userid_pk)
+            .annotate(month=ExtractMonth('start_date'))
+            .values('month')
+            .annotate(count=Count('id'))
+            .order_by('month')
+        )
+        serializer = MonthlyReadingCountSerializer(monthly_counts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class WeeklyReadingCountView(APIView):
+    def get(self, request, userid_pk):
+        current_year = timezone.now().year
+        weekly_counts = (
+            Bankbook.objects.filter(user_id=userid_pk)
+            .annotate(week=ExtractWeek('start_date'))
+            .values('week')
+            .annotate(count=Count('id'))
+            .order_by('week')
+        )
+        serializer = WeeklyReadingCountSerializer(weekly_counts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class YearlyReadingCountView(APIView):
+    def get(self, request, userid_pk):
+        yearly_counts = (
+            Bankbook.objects.filter(user_id=userid_pk)
+            .annotate(year=ExtractYear('start_date'))
+            .values('year')
+            .annotate(count=Count('id'))
+            .order_by('year')
+        )
+        serializer = YearlyReadingCountSerializer(yearly_counts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

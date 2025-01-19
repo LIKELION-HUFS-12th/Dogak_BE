@@ -43,3 +43,17 @@ class BankbookPostSerializer(serializers.ModelSerializer):
 class DateInputSerializer(serializers.Serializer):
     date = serializers.DateField()
 
+
+
+
+class MonthlyReadingCountSerializer(serializers.Serializer):
+    month = serializers.IntegerField()  # 월
+    count = serializers.IntegerField()   # 읽은 권수
+
+class WeeklyReadingCountSerializer(serializers.Serializer):
+    week = serializers.IntegerField()    # 주차
+    count = serializers.IntegerField()   # 읽은 권수
+
+class YearlyReadingCountSerializer(serializers.Serializer):
+    year = serializers.IntegerField()    # 연도
+    count = serializers.IntegerField()    # 읽은 권수
