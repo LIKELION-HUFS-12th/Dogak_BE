@@ -175,6 +175,7 @@ pymysql.install_as_MySQLdb()
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:5173",  
     "https://dogakdogak.store",
+    "https://dogak.netlify.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
