@@ -5,7 +5,7 @@ from bankbook.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'password', 'userid', 'name', 'gender', 'age', 'region', 'email']
+        fields = ['username', 'password', 'name', 'gender', 'age', 'region', 'email']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields=['username','name','gender','age']
+        fields = ['username', 'name', 'gender', 'age']
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -29,7 +29,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'name', 'gender', 'age', 'region', 'email', 'read_books_count']
 
     def get_read_books_count(self, obj):
-        return obj.user.count()  
-
-
-    
+        return obj.user.count()
